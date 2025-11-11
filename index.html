@@ -288,9 +288,10 @@
             transition: filter 0.6s ease;
         }
         
-        .about-bg-image:hover img {
-            filter: grayscale(0%) contrast(1);
-        }
+       .about-bg-image:hover img,
+       .about-bg-image img:hover {
+        filter: grayscale(0%) contrast(1) !important;
+       }
         
     
         
@@ -524,6 +525,62 @@
             background: #ffffff;
             color: #0a0a0a;
         }
+
+
+
+
+        /* Desktop - default */
+body {
+    font-size: 1.25rem;
+    padding: 8rem 10vw;
+}
+
+.hero-text h1 {
+    font-size: 4rem;
+}
+
+/* Large tablets */
+@media (max-width: 968px) {
+    body {
+        font-size: 1.1rem;
+        padding: 4rem 5vw;
+    }
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+    .section,
+    .about,
+    .recognition,
+    .contact {
+        padding: 2rem 5vw;
+    }
+}
+
+/* Mobile screens */
+@media (max-width: 600px) {
+    body {
+        font-size: 0.96rem;
+        padding: 2rem 3vw;
+    }
+    .hero-text h1 {
+        font-size: 1.4rem;
+        line-height: 1.2;
+    }
+    .section,
+    .about,
+    .recognition,
+    .contact {
+        padding: 1rem 3vw;
+    }
+    nav a {
+        font-size: 1rem;
+        margin-left: 0.6rem;
+    }
+}
+
+
+
+        
     </style>
 </head>
 <body>
@@ -542,7 +599,7 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <h1>Marketing<br>strategist &<br>growth driver</h1>
+                <h1>Marketing<br>Strategist &<br>Growth Driver</h1>
                 <p class="hero-subtitle">PGDM candidate at IMI Delhi with proven track record in B2B sales, financial analysis, and digital marketing. Delivered £110K+ revenue and achieved 99.52 percentile in competitive examinations.</p>
                 
                 <div class="hero-stats">
