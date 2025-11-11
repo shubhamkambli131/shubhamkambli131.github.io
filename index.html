@@ -288,10 +288,13 @@
             transition: filter 0.6s ease;
         }
         
-       .about-bg-image:hover img,
-       .about-bg-image img:hover {
-        filter: grayscale(0%) contrast(1) !important;
-       }
+      .about-bg-image img {
+  filter: grayscale(100%);
+  transition: filter 0.6s ease;
+}
+.about-bg-image:hover img {
+  filter: grayscale(0%) contrast(1);
+}
         
     
         
