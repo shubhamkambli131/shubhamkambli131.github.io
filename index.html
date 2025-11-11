@@ -280,12 +280,36 @@
             z-index: 0;
         }
         
-        .about-bg-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%);
-        }
+     .about-bg-image {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 450px;  /* Increased from 350px */
+    height: 600px;  /* Increased from 450px */
+    opacity: 0.25;
+    z-index: 0;
+    transition: all 0.6s ease;  /* Added transition */
+}
+
+.about-bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.6s ease;  /* Added transition */
+}
+
+/* Add this new hover rule */
+.about-bg-image:hover img {
+    filter: grayscale(0%);
+}
+
+/* Optional: increase opacity on hover for better visibility */
+.about-bg-image:hover {
+    opacity: 0.4;
+}
+
         
         .about-content {
             max-width: 1400px;
