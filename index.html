@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shubham Kambli — Marketing & Strategy</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Shubham Kambli — Marketing Strategist & Growth Driver</title>
+    <meta name="description" content="Shubham Kambli - Marketing Strategist with proven track record in B2B sales, digital marketing, and strategic growth. IMI Delhi PGDM candidate with 110+ client conversions and 99.52 percentile.">
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Shubham Kambli - Marketing Strategist & Growth Driver">
+    <meta property="og:description" content="PGDM candidate at IMI Delhi | 110+ Client Conversions | 99.52 Percentile | Marketing & Strategy Professional">
+    <meta property="og:image" content="https://shubhamkambli131.github.io/images/hero.jpeg">
+    <meta property="og:url" content="https://shubhamkambli131.github.io">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shubham Kambli - Marketing Strategist">
+    <meta name="twitter:description" content="Marketing & Strategy Professional | IMI Delhi | B2B Sales Expert">
+    <meta name="twitter:image" content="https://shubhamkambli131.github.io/images/hero.jpeg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' fill='%23ffffff'>SK</text></svg>">
+    
     <style>
         * {
             margin: 0;
@@ -17,6 +36,55 @@
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Subtle Background Texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         /* Scroll Progress Bar */
@@ -29,6 +97,43 @@
             background: linear-gradient(90deg, #ffffff, #999);
             z-index: 10000;
             transition: width 0.1s ease;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .back-to-top::before {
+            content: '↑';
+            font-size: 1.5rem;
+            color: #ffffff;
         }
         
         /* Header */
@@ -61,27 +166,80 @@
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
         
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+        
         nav a {
-            margin-left: 2.5rem;
             text-decoration: none;
             color: #999;
             font-size: 0.85rem;
             transition: color 0.3s ease;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
             letter-spacing: 0.05em;
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        nav a.active {
+            color: #ffffff;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: #ffffff;
+            transition: width 0.3s ease;
+        }
+        
+        nav a.active::after,
+        nav a:hover::after {
+            width: 100%;
         }
         
         nav a:hover {
             color: #ffffff;
         }
         
-        /* Hero Section with Parallax */
+        /* Resume Button */
+        .resume-btn {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .resume-btn:hover {
+            background: #ffffff;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8rem 5% 4rem;
+            padding: 6rem 5% 4rem;
             position: relative;
             overflow: hidden;
         }
@@ -91,58 +249,59 @@
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8rem;
+            gap: 6rem;
             align-items: center;
         }
         
         .hero-text h1 {
-            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 400;
             line-height: 1.1;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             letter-spacing: -0.02em;
             opacity: 0;
             animation: fadeInUp 1s ease forwards 0.2s;
         }
         
         .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-size: clamp(0.95rem, 1.8vw, 1.2rem);
             color: #999;
             max-width: 500px;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
             font-weight: 300;
-            line-height: 1.8;
+            line-height: 1.7;
             opacity: 0;
             animation: fadeInUp 1s ease forwards 0.4s;
         }
         
         .hero-stats {
             display: flex;
-            gap: 3rem;
+            gap: 2.5rem;
             opacity: 0;
             animation: fadeInUp 1s ease forwards 0.6s;
         }
         
         .stat-item {
             border-left: 1px solid #ffffff;
-            padding-left: 1.2rem;
+            padding-left: 1rem;
         }
         
         .stat-number {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 300;
             display: block;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
         
         .stat-label {
-            font-size: 0.75rem;
-            color: #666;
+            font-size: 0.7rem;
+            color: #999;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.4;
         }
         
         .hero-image {
@@ -282,7 +441,7 @@
             color: #666;
         }
         
-        /* About Section - COMPLETE ISOLATION */
+        /* About Section */
         .about {
             background: #111;
             padding: 8rem 5% 10rem 5%;
@@ -465,7 +624,6 @@
             text-transform: uppercase;
             letter-spacing: 0.15em;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            position: relative;
         }
         
         .contact-link:hover {
@@ -508,6 +666,23 @@
         
         /* Responsive */
         @media (max-width: 968px) {
+            .nav-links {
+                gap: 2rem;
+            }
+            
+            nav {
+                gap: 1.5rem;
+            }
+            
+            nav a {
+                font-size: 0.8rem;
+            }
+            
+            .resume-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.75rem;
+            }
+            
             .hero-content {
                 grid-template-columns: 1fr;
                 gap: 4rem;
@@ -544,6 +719,13 @@
                 flex-direction: column;
                 gap: 2rem;
             }
+            
+            .back-to-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+            }
         }
         
         html {
@@ -557,18 +739,29 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+    </div>
+    
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress"></div>
+    
+    <!-- Back to Top Button -->
+    <div class="back-to-top"></div>
 
     <header>
         <div class="header-content">
             <div class="logo">SHUBHAM KAMBLI</div>
-            <nav>
-                <a href="#work">Work</a>
-                <a href="#about">About</a>
-                <a href="#recognition">Recognition</a>
-                <a href="#contact">Contact</a>
-            </nav>
+            <div class="nav-links">
+                <nav>
+                    <a href="#work" class="nav-link">Work</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#recognition" class="nav-link">Recognition</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+                <a href="Shubham_Kambli_Resume.pdf" download class="resume-btn">Resume</a>
+            </div>
         </div>
     </header>
 
@@ -594,7 +787,7 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="images/hero.jpeg" alt="Shubham Kambli">
+                <img src="images/hero.jpeg" alt="Shubham Kambli" loading="lazy">
             </div>
         </div>
     </section>
@@ -603,8 +796,8 @@
         <div class="section-label">Selected Work</div>
         <div class="work-grid">
             <div class="work-item">
-                <div class="work-image" data-tilt>
-                    <img src="images/tech-mahindra.jpeg" alt="Tech Mahindra">
+                <div class="work-image">
+                    <img src="images/tech-mahindra.jpeg" alt="Tech Mahindra" loading="lazy">
                 </div>
                 <div class="work-details">
                     <div class="work-number">01</div>
@@ -620,8 +813,8 @@
             </div>
 
             <div class="work-item">
-                <div class="work-image" data-tilt>
-                    <img src="images/uniacco.jpeg" alt="UniAcco">
+                <div class="work-image">
+                    <img src="images/uniacco.jpeg" alt="UniAcco" loading="lazy">
                 </div>
                 <div class="work-details">
                     <div class="work-number">02</div>
@@ -638,8 +831,8 @@
             </div>
 
             <div class="work-item">
-                <div class="work-image" data-tilt>
-                    <img src="images/cannibals.jpeg" alt="Cannibals Media">
+                <div class="work-image">
+                    <img src="images/cannibals.jpeg" alt="Cannibals Media" loading="lazy">
                 </div>
                 <div class="work-details">
                     <div class="work-number">03</div>
@@ -660,7 +853,7 @@
     <section class="about" id="about">
         <div class="about-wrapper">
             <div class="about-image-container">
-                <img src="images/about-bg.jpeg" alt="Shubham Kambli">
+                <img src="images/about-bg.jpeg" alt="Shubham Kambli" loading="lazy">
             </div>
             <div class="about-content">
                 <div class="about-left">
@@ -760,7 +953,15 @@
     </footer>
 
     <script>
-        // ===== 1. SCROLL PROGRESS BAR =====
+        // ===== LOADING SCREEN =====
+        window.addEventListener('load', () => {
+            const loadingScreen = document.querySelector('.loading-screen');
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 500);
+        });
+        
+        // ===== SCROLL PROGRESS BAR =====
         const progressBar = document.querySelector('.scroll-progress');
         
         window.addEventListener('scroll', () => {
@@ -769,7 +970,50 @@
             progressBar.style.width = scrolled + '%';
         });
         
-        // ===== 2. NUMBER COUNTER ANIMATION =====
+        // ===== BACK TO TOP BUTTON =====
+        const backToTop = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // ===== ACTIVE NAV HIGHLIGHTING =====
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        function setActiveNav() {
+            const scrollPosition = window.scrollY + 200;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', setActiveNav);
+        
+        // ===== NUMBER COUNTER ANIMATION =====
         const statNumbers = document.querySelectorAll('.stat-number');
         let hasAnimated = false;
         
@@ -814,61 +1058,7 @@
         const statsSection = document.querySelector('.hero-stats');
         if (statsSection) statsObserver.observe(statsSection);
         
-        // ===== 3. 3D TILT EFFECT ON WORK IMAGES (Optimized) =====
-        const tiltElements = document.querySelectorAll('[data-tilt]');
-        
-        tiltElements.forEach(element => {
-            let tiltTimeout;
-            
-            element.addEventListener('mousemove', (e) => {
-                clearTimeout(tiltTimeout);
-                
-                const rect = element.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const rotateX = ((y - centerY) / 15).toFixed(2);
-                const rotateY = ((centerX - x) / 15).toFixed(2);
-                
-                element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-            });
-            
-            element.addEventListener('mouseleave', () => {
-                tiltTimeout = setTimeout(() => {
-                    element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                }, 100);
-            });
-        });
-        
-        // ===== 4. PARALLAX SCROLL EFFECT (Optimized) =====
-        const parallaxElements = document.querySelectorAll('[data-parallax]');
-        let ticking = false;
-        
-        function updateParallax() {
-            const scrolled = window.pageYOffset;
-            
-            parallaxElements.forEach(element => {
-                const speed = parseFloat(element.getAttribute('data-parallax'));
-                const yPos = -(scrolled * speed);
-                element.style.transform = `translateY(${yPos}px)`;
-            });
-            
-            ticking = false;
-        }
-        
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(updateParallax);
-                ticking = true;
-            }
-        });
-        
-        // ===== EXISTING FEATURES =====
-        
-        // Smooth scroll
+        // ===== SMOOTH SCROLL =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -879,7 +1069,7 @@
             });
         });
 
-        // Scroll animations for work items and recognition
+        // ===== SCROLL ANIMATIONS FOR WORK ITEMS =====
         const observerOptions = {
             threshold: 0.15,
             rootMargin: '0px 0px -80px 0px'
@@ -899,7 +1089,7 @@
             observer.observe(el);
         });
 
-        // Header scroll effect
+        // ===== HEADER SCROLL EFFECT =====
         let lastScroll = 0;
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
@@ -914,7 +1104,7 @@
             lastScroll = currentScroll;
         });
 
-        // Tap-to-toggle color effect for images (mobile)
+        // ===== TAP-TO-TOGGLE COLOR (MOBILE) =====
         const allImages = document.querySelectorAll('.about-image-container, .hero-image, .work-image');
 
         allImages.forEach(imageContainer => {
