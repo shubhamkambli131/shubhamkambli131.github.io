@@ -6,6 +6,14 @@
     
     <!-- SEO Meta Tags -->
     <title>Shubham Kambli — Strategy & Finance</title>
+    <meta name="description" content="Shubham Kambli - Marketing Strategist & Finance Professional. PGDM candidate at IMI Delhi.">
+    
+    <!-- Social Media Meta Tags (Open Graph) -->
+    <meta property="og:title" content="Shubham Kambli | Strategy & Finance Portfolio">
+    <meta property="og:description" content="Driving £110k+ revenue and strategic growth. PGDM IMI Delhi.">
+    <meta property="og:image" content="https://shubhamkambli131.github.io/images/hero.jpeg">
+    <meta property="og:url" content="https://shubhamkambli131.github.io">
+    <meta property="og:type" content="website">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' fill='%23D4AF37'>SK</text></svg>">
@@ -59,6 +67,15 @@
             font-weight: 400;
             color: var(--text-main);
             letter-spacing: -0.02em;
+        }
+
+        /* --- 1. NOISE TEXTURE (PREMIUM FEEL) --- */
+        .noise-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 50;
         }
 
         /* Loading Screen */
@@ -163,16 +180,60 @@
         
         .nav-links { display: flex; align-items: center; gap: 3rem; }
         
-        nav { display: flex; gap: 2rem; }
+        /* Desktop Navigation */
+        nav.desktop-nav { display: flex; gap: 2rem; }
         
-        nav a {
+        nav.desktop-nav a {
             text-decoration: none; color: var(--text-muted);
             font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
             font-weight: 500;
             transition: color 0.3s ease;
             font-family: var(--font-body);
         }
-        nav a:hover { color: var(--accent-gold); }
+        nav.desktop-nav a:hover { color: var(--accent-gold); }
+        
+        /* --- MOBILE MENU BUTTON (HAMBURGER) --- */
+        .mobile-toggle {
+            display: none; /* Hidden on desktop */
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 1002;
+        }
+        .mobile-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: 0.3s ease;
+        }
+        
+        /* --- MOBILE MENU OVERLAY --- */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--bg-color);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s ease;
+        }
+        .mobile-menu-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+        .mobile-menu-overlay a {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--text-main);
+            text-decoration: none;
+        }
         
         .resume-btn {
             padding: 0.8rem 2rem;
@@ -332,9 +393,20 @@
             margin: 0 auto;
             display: grid; grid-template-columns: 400px 1fr; gap: 6rem;
         }
+        .about-image-container {
+            position: relative;
+        }
+        /* Overlay to make bricks look more abstract/premium */
+        .about-image-container::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 10, 20, 0.4); /* Dark overlay */
+            transition: opacity 0.5s ease;
+        }
+        .about-image-container:hover::after { opacity: 0.1; }
+
         .about-image-container img {
             width: 100%; height: auto; display: block;
-            border-radius: 4px; filter: grayscale(100%); transition: 0.4s ease;
+            border-radius: 4px; filter: grayscale(100%) contrast(1.2); transition: 0.4s ease;
             object-fit: cover;
         }
         .about-image-container:hover img { filter: grayscale(0%); }
@@ -361,10 +433,14 @@
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
-        .recognition-item:hover { border-color: var(--accent-gold); transform: translateY(-5px); }
+        .recognition-item:hover { 
+            border-color: var(--accent-gold); 
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(207, 161, 69, 0.15); 
+        }
         .recognition-title { font-size: 1.3rem; margin-bottom: 0.5rem; font-family: var(--font-heading); }
         
-        /* Contact */
+        /* --- CONTACT SECTION --- */
         .contact {
             padding: 12rem 5%;
             min-height: 70vh;
@@ -410,6 +486,19 @@
             border-top: 1px solid var(--border-color);
         }
 
+        /* --- PRINT STYLESHEET --- */
+        @media print {
+            body { background: white; color: black; }
+            .noise-overlay, .back-to-top, .scroll-progress, .loading-screen, nav, .resume-btn, .contact-links { display: none; }
+            header { position: static; border-bottom: 1px solid #000; }
+            .logo { color: #000; }
+            h1, h2, h3, h4 { color: #000; }
+            .work-item, .about, .recognition-item { page-break-inside: avoid; border: 1px solid #ccc; color: #000; }
+            .hero-text h1 { font-size: 24pt; }
+            .stat-number { color: #000; }
+            a { color: #000; text-decoration: underline; }
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -419,7 +508,9 @@
 
         /* === MOBILE RESPONSIVENESS === */
         @media (max-width: 900px) {
-            nav { display: none; }
+            nav.desktop-nav { display: none; }
+            .mobile-toggle { display: flex; }
+            
             .header-content { gap: 1rem; }
             
             .section, .about-wrapper, .header-content, .hero-content {
@@ -452,15 +543,15 @@
             .contact-link { width: 100%; }
             
             .back-to-top {
-                bottom: 1rem;
-                right: 1rem;
-                width: 40px;
-                height: 40px;
+                bottom: 1rem; right: 1rem; width: 40px; height: 40px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Cinematic Noise Texture -->
+    <div class="noise-overlay"></div>
+
     <!-- Loading Screen -->
     <div class="loading-screen">
         <div class="loader"></div>
@@ -472,16 +563,32 @@
     <!-- Back to Top Button -->
     <div class="back-to-top"></div>
 
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <a href="#work" class="mobile-link">Work</a>
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#recognition" class="mobile-link">Recognition</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+    </div>
+
     <header>
         <div class="header-content">
             <div class="logo">SHUBHAM KAMBLI</div>
             <div class="nav-links">
-                <nav>
+                <!-- Desktop Nav -->
+                <nav class="desktop-nav">
                     <a href="#work">Work</a>
                     <a href="#about">About</a>
                     <a href="#recognition">Recognition</a>
                 </nav>
-                <a href="Shubham_Kambli_Resume.pdf" download class="resume-btn">Resume</a>
+                <!-- Resume Button -->
+                <a href="Shubham_Kambli_Resume.pdf" target="_blank" class="resume-btn">Resume</a>
+                <!-- Mobile Toggle -->
+                <button class="mobile-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </header>
@@ -489,8 +596,8 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <h1>Marketing Strategy<br>& Financial Rigor</h1>
-                <p class="hero-subtitle">PGDM candidate at IMI Delhi. Combining financial benchmarking with creative market strategies to drive measurable growth.</p>
+                <h1>Marketing Strategy<br>& Growth Driver</h1>
+                <p class="hero-subtitle">PGDM candidate at IMI Delhi with proven track record in B2B sales, financial analysis, and digital marketing. Delivered £110K+ revenue and achieved 99.52 percentile in competitive examinations.</p>
                 
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -644,6 +751,7 @@
         <div class="contact-content">
             <h2>Let's Work Together</h2>
             <p>Open to opportunities in Strategic Marketing, Finance, and Growth.</p>
+            
             <div class="contact-links">
                 <a href="mailto:shubhamkambli131@gmail.com" class="contact-link">Email Me</a>
                 <a href="https://www.linkedin.com/in/shubham-kambli-136602122/" class="contact-link">LinkedIn</a>
@@ -681,6 +789,21 @@
         
         backToTop.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Mobile Menu Toggle
+        const toggleBtn = document.querySelector('.mobile-toggle');
+        const overlay = document.querySelector('.mobile-menu-overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        toggleBtn.addEventListener('click', () => {
+            overlay.classList.toggle('active');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                overlay.classList.remove('active');
+            });
         });
         
         // Scroll Animations
