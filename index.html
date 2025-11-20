@@ -60,6 +60,14 @@
             overflow-x: hidden;
         }
         
+        /* --- SCROLL MARGIN FIX --- */
+        html { 
+            scroll-behavior: smooth; 
+        }
+        section[id] {
+            scroll-margin-top: 100px;
+        }
+        
         body {
             font-family: var(--font-body);
             background: var(--bg-color);
@@ -68,8 +76,6 @@
             position: relative;
             -webkit-font-smoothing: antialiased;
         }
-        
-        html { scroll-behavior: smooth; }
 
         /* Typography */
         h1, h2, h3, h4 {
@@ -79,7 +85,7 @@
             letter-spacing: -0.02em;
         }
 
-        /* --- 1. NOISE TEXTURE (PREMIUM FEEL) --- */
+        /* --- 1. NOISE TEXTURE --- */
         .noise-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -704,15 +710,16 @@
                 
                 <div class="hero-stats">
                     <div class="stat-item">
-                        <span class="stat-number">110+</span>
+                        <!-- Count-up class added to trigger JS -->
+                        <span class="stat-number animate-number">110+</span>
                         <span class="stat-label">Clients Closed</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">£110k</span>
+                        <span class="stat-number animate-number">£110k</span>
                         <span class="stat-label">Revenue Delivered</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">99.5%</span>
+                        <span class="stat-number animate-number">99.5%</span>
                         <span class="stat-label">MBA CET Score</span>
                     </div>
                 </div>
@@ -802,11 +809,11 @@
 
                 <div class="leadership-stats">
                     <div class="l-stat">
-                        <span class="l-number">40%</span>
+                        <span class="l-number animate-number">40%</span>
                         <span class="l-label">Cost Reduction (Logistics)</span>
                     </div>
                     <div class="l-stat">
-                        <span class="l-number">12</span>
+                        <span class="l-number animate-number">12</span>
                         <span class="l-label">Summits Executed</span>
                     </div>
                     <div class="l-stat">
@@ -817,7 +824,7 @@
             </div>
             
             <div class="leadership-image">
-                <img src="images/hero.jpeg" alt="Shubham at Conventus" loading="lazy">
+                <img src="images/conventus.jpeg" alt="Shubham at Conventus" loading="lazy">
             </div>
         </div>
     </section>
@@ -864,11 +871,11 @@
         <div class="section-label">Awards & Recognition</div>
         <div class="recognition-grid">
             <div class="recognition-item">
-                <h3 class="recognition-title">1st Runner-Up</h3>
+                <h3 class="recognition-title"><span class="animate-number">1</span>st Runner-Up</h3>
                 <p class="recognition-desc">Sustainability Management Case Competition at TERI School of Advanced Studies.</p>
             </div>
             <div class="recognition-item">
-                <h3 class="recognition-title">99.52 Percentile</h3>
+                <h3 class="recognition-title"><span class="animate-number">99.52</span> Percentile</h3>
                 <p class="recognition-desc">Top 0.5% among 133,000+ candidates in MAH-MBA CET.</p>
             </div>
             <div class="recognition-item">
@@ -876,15 +883,15 @@
                 <p class="recognition-desc">Events & Societies, Student Council at IMI Delhi.</p>
             </div>
             <div class="recognition-item">
-                <h3 class="recognition-title">₹10L+ Sponsorships</h3>
+                <h3 class="recognition-title">₹<span class="animate-number">10</span>L+ Sponsorships</h3>
                 <p class="recognition-desc">Secured major funding for college events through strategic partnerships.</p>
             </div>
             <div class="recognition-item">
-                <h3 class="recognition-title">Photography Champion</h3>
+                <h3 class="recognition-title"><span class="animate-number">1</span>st Rank Photography</h3>
                 <p class="recognition-desc">1st Rank in Inter-BCG Schools photography competition.</p>
             </div>
             <div class="recognition-item">
-                <h3 class="recognition-title">'A' Grade Scout</h3>
+                <h3 class="recognition-title"><span class="animate-number">9</span>th-Level Scout</h3>
                 <p class="recognition-desc">9th-Level Certification, Bharat Scouts & Guides.</p>
             </div>
         </div>
@@ -948,7 +955,65 @@
             });
         });
         
-        // Scroll Animations
+        // --- NUMBER ANIMATION LOGIC ---
+        const animateNumbers = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    // Avoid re-animating if already done
+                    if (element.classList.contains('animated')) return;
+                    
+                    const text = element.innerText;
+                    // Regex to separate prefix, number, and suffix
+                    // Capture groups: 1=Prefix, 2=Number, 3=Suffix
+                    const match = text.match(/^([^\d]*)([\d.]+)([^\d]*)$/);
+                    
+                    if (match) {
+                        const prefix = match[1];
+                        const target = parseFloat(match[2]);
+                        const suffix = match[3];
+                        const duration = 2000; // 2 seconds
+                        const frameDuration = 1000 / 60;
+                        const totalFrames = Math.round(duration / frameDuration);
+                        let frame = 0;
+                        
+                        const counter = setInterval(() => {
+                            frame++;
+                            // Ease-out function for smooth stop
+                            const progress = frame / totalFrames;
+                            const easeProgress = 1 - Math.pow(1 - progress, 3);
+                            
+                            const currentNum = target * easeProgress;
+                            
+                            // Check if integer or float for formatting
+                            const displayNum = Number.isInteger(target) 
+                                ? Math.floor(currentNum) 
+                                : currentNum.toFixed(1); // Keep 1 decimal for 99.5 etc
+                                
+                            element.innerText = prefix + displayNum + suffix;
+                            
+                            if (frame === totalFrames) {
+                                clearInterval(counter);
+                                element.innerText = text; // Ensure exact final text
+                                element.classList.add('animated');
+                            }
+                        }, frameDuration);
+                    }
+                    // Stop observing this element
+                    observer.unobserve(element);
+                }
+            });
+        };
+
+        const numberObserver = new IntersectionObserver(animateNumbers, {
+            threshold: 0.5
+        });
+
+        document.querySelectorAll('.animate-number').forEach(el => {
+            numberObserver.observe(el);
+        });
+        
+        // --- GENERAL SCROLL ANIMATIONS ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
